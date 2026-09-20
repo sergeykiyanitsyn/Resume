@@ -12,7 +12,7 @@ function TimelineEntry({ entry }: { entry: ExperienceEntry }) {
       <article
         className="experience-entry"
         aria-labelledby={`${entry.id}-title`}
-        data-reveal
+        data-reveal="group"
       >
         <div className="experience-entry__meta">
           <p className="experience-entry__period">
@@ -67,7 +67,7 @@ export default function Experience() {
       id="experience"
       aria-labelledby="experience-title"
     >
-      <div className="section-heading" data-reveal>
+      <div className="section-heading" data-reveal="group">
         <p className="eyebrow">
           <span className="accent">01 /</span> Опыт
         </p>

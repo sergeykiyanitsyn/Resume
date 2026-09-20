@@ -9,7 +9,10 @@ export default function CaseCard({ item }: { item: CaseStudy }) {
         <span className="case-metric">{item.metric}</span>
         <span className="case-unit">{item.unit}</span>
         <span className="case-title">{item.title}</span>
-        <span className="case-preview">{item.preview}</span>
+        <span className="case-preview">
+          {item.preview}
+          {item.note && <span className="case-note">{item.note}</span>}
+        </span>
         <span className="case-toggle">
           Подробнее <span aria-hidden="true">+</span>
         </span>

@@ -13,9 +13,6 @@
   font-size: 15px;
   line-height: 1.8;
 }
-.focus-copy .quiet-link {
-  margin-top: 15px;
-}
 @media (max-width: 1050px) {
   .focus-section {
     gap: 35px;

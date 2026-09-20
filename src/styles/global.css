@@ -2,7 +2,7 @@
   color-scheme: dark;
   --bg: #101216;
   --text: #edece8;
-  --muted: #a2a4aa;
+  --muted: #b2b5bc;
   --accent: #ff854a;
   --line: #ffffff20;
   --mono: Consolas, "Courier New", monospace;
@@ -115,7 +115,7 @@ h1 em {
   min-height: 49px;
   padding: 14px 19px;
   border: 1px solid #ffffff48;
-  font: 12px var(--mono);
+  font: 13px var(--mono);
   transition:
     background 0.2s,
     border-color 0.2s;
@@ -135,7 +135,7 @@ h1 em {
   align-items: center;
   gap: 14px;
   min-height: 44px;
-  font: 12px/1.6 var(--mono);
+  font: 13px/1.6 var(--mono);
 }
 .section {
   padding-block: 108px;

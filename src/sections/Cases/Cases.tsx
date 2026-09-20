@@ -24,9 +24,6 @@ export default function Cases() {
           <CaseCard key={item.id} item={item} />
         ))}
       </div>
-      <p className="cases-footnote">
-        * Оценка времени подготовки документации для типовой фичи.
-      </p>
     </section>
   );
 }

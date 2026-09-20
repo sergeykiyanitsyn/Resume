@@ -5,12 +5,12 @@
   gap: 20px;
   padding-block: 25px;
   color: var(--muted);
-  font: 10px/1.6 var(--mono);
+  font: 12px/1.6 var(--mono);
 }
 @media (max-width: 700px) {
   .footer {
     flex-wrap: wrap;
-    font-size: 9px;
+    font-size: 12px;
     gap: 13px;
   }
   .footer > span:nth-child(2) {

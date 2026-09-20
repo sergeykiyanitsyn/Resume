@@ -2,20 +2,10 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
-  border-top: 1px solid var(--line);
+  gap: 16px;
 }
-.cases-footnote {
-  color: var(--muted);
-  font: 10px/1.7 var(--mono);
-  margin: 25px 0 0;
-}
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
   .cases {
     grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 700px) {
-  .cases-footnote {
-    font-size: 11px;
   }
 }

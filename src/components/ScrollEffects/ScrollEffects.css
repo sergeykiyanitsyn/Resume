@@ -1,22 +1,77 @@
-/* Nothing is hidden while waiting for JavaScript or for the observer. */
-[data-reveal-state="revealed"] {
-  animation: section-arrive 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+/* Content stays visible if JavaScript or IntersectionObserver is unavailable. */
+[data-reveal] {
+  --reveal-delay: 0ms;
+  --reveal-distance: 32px;
+}
+
+[data-reveal-state="revealed"]:not([data-reveal="group"]),
+[data-reveal="group"][data-reveal-state="revealed"] > * {
+  animation: section-arrive 850ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: var(--reveal-delay);
+}
+
+[data-reveal="group"][data-reveal-state="revealed"] > :nth-child(2) {
+  animation-delay: 100ms;
+}
+
+[data-reveal="group"][data-reveal-state="revealed"] > :nth-child(3) {
+  animation-delay: 180ms;
+}
+
+[data-reveal="group"][data-reveal-state="revealed"] > :nth-child(4) {
+  animation-delay: 240ms;
+}
+
+[data-reveal="group"][data-reveal-state="revealed"] > :nth-child(5) {
+  animation-delay: 300ms;
+}
+
+.section-heading[data-reveal] {
+  --reveal-distance: 42px;
+}
+
+.case[data-reveal-state="revealed"] {
+  animation-name: card-arrive;
+}
+
+@media (min-width: 701px) {
+  .case:nth-child(2) {
+    --reveal-delay: 110ms;
+  }
+
+  .case:nth-child(3) {
+    --reveal-delay: 220ms;
+  }
 }
 
 /* Keyboard and anchor navigation keep the requested content immediately stable. */
 [data-reveal-state="revealed"]:focus-within,
-[data-reveal-state="revealed"]:target {
+[data-reveal-state="revealed"]:target,
+[data-reveal="group"][data-reveal-state="revealed"]:focus-within > *,
+:target [data-reveal-state="revealed"],
+:target [data-reveal="group"][data-reveal-state="revealed"] > * {
   animation: none;
 }
 
 @keyframes section-arrive {
   from {
-    opacity: 0.45;
-    transform: translateY(18px);
+    opacity: 0.15;
+    transform: translateY(var(--reveal-distance));
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes card-arrive {
+  from {
+    opacity: 0.15;
+    transform: translateY(48px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -47,8 +102,82 @@
   }
 }
 
+/* The browser ties these effects directly to scroll, in both directions. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .experience-timeline {
+      view-timeline-name: --experience-scroll;
+      view-timeline-axis: block;
+    }
+
+    .experience-timeline::before {
+      background: var(--line);
+    }
+
+    .experience-timeline::after {
+      content: "";
+      position: absolute;
+      inset: 8px auto 0 7px;
+      width: 1px;
+      background: var(--accent);
+      transform-origin: top;
+      animation: timeline-draw linear both;
+      animation-timeline: --experience-scroll;
+      animation-range: cover 15% cover 85%;
+      pointer-events: none;
+    }
+
+    .experience-timeline__marker {
+      z-index: 1;
+    }
+  }
+
+  @media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
+    .hero {
+      view-timeline-name: --hero-scroll;
+      view-timeline-axis: block;
+    }
+
+    .portrait {
+      animation: portrait-drift linear both;
+      animation-timeline: --hero-scroll;
+      animation-range: exit 0% exit 100%;
+    }
+  }
+}
+
+@keyframes timeline-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes portrait-drift {
+  from {
+    transform: translateY(0) rotate(-2deg) scale(1);
+  }
+  to {
+    transform: translateY(65px) rotate(1deg) scale(0.96);
+  }
+}
+
+@media (max-width: 700px) {
+  [data-reveal],
+  .section-heading[data-reveal] {
+    --reveal-distance: 22px;
+  }
+
+  .case[data-reveal-state="revealed"] {
+    animation-name: section-arrive;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal-state="revealed"] {
+  [data-reveal-state="revealed"],
+  [data-reveal="group"][data-reveal-state="revealed"] > * {
     animation: none;
   }
 

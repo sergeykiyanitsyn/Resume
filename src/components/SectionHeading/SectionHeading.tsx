@@ -15,7 +15,7 @@ export default function SectionHeading({
   intro,
 }: Props) {
   return (
-    <div className="section-heading" data-reveal>
+    <div className="section-heading" data-reveal="group">
       <p className="eyebrow">
         <span className="accent">{number} /</span> {label}
       </p>

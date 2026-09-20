@@ -5,16 +5,15 @@ import { profile } from "../../data/profile";
 export default function Contact() {
   return (
     <section
-      data-reveal
       className="contact-section wrap"
       id="contact"
       aria-labelledby="contact-title"
     >
-      <p className="eyebrow">
+      <p className="eyebrow" data-reveal>
         <span className="accent">04 /</span> Контакт
       </p>
       <div className="contact-grid">
-        <div>
+        <div data-reveal="group">
           <h2 id="contact-title">
             Свяжитесь
             <br /> <em>со мной.</em>
@@ -24,7 +23,7 @@ export default function Contact() {
             <br /> с сильным фокусом на автоматизацию.
           </p>
         </div>
-        <div className="contact-links">
+        <div className="contact-links" data-reveal="group">
           <a
             className="telegram-link"
             href={profile.telegram}
@@ -32,10 +31,12 @@ export default function Contact() {
             rel="noopener"
           >
             <span>
-              <small>Удобнее всего — в Telegram</small>
-              {profile.telegramHandle}
+              <small>{profile.telegramHandle}</small>
+              Написать в Telegram
             </span>
-            <span className="accent">↗</span>
+            <span className="telegram-arrow" aria-hidden="true">
+              ↗
+            </span>
           </a>
           <a className="email-link" href={`mailto:${profile.email}`}>
             {profile.email} <span>↗</span>

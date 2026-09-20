@@ -1,12 +1,11 @@
 import ResumeLink from "../../components/ResumeLink/ResumeLink";
-import QualityField from "../../components/QualityField/QualityField";
 import { profile } from "../../data/profile";
 import "./Hero.css";
 
 export default function Hero() {
   return (
     <section className="hero wrap" id="home" aria-labelledby="hero-title">
-      <div className="hero-copy">
+      <div className="hero-copy" data-reveal="group">
         <p className="eyebrow">
           <span className="dot" /> {profile.name} / QA Engineer
         </p>
@@ -30,7 +29,6 @@ export default function Hero() {
         </div>
       </div>
       <div className="hero-visual">
-        <QualityField />
         <figure className="portrait">
           <img
             src={profile.portraitUrl}
@@ -46,7 +44,6 @@ export default function Hero() {
         </figure>
       </div>
       <div className="hero-bottom">
-        <span>{profile.city}</span>
         <span>Python · Pytest · Selenium · Appium</span>
         <a href="#experience">Листайте дальше ↓</a>
       </div>

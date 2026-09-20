@@ -19,7 +19,7 @@
   color: var(--accent);
 }
 .brand-note {
-  font: 11px var(--mono);
+  font: 12px var(--mono);
   color: var(--muted);
 }
 nav {
@@ -42,8 +42,8 @@ nav {
     height: 76px;
   }
   nav {
-    gap: 19px;
-    font-size: 11px;
+    gap: 16px;
+    font-size: 12px;
   }
   .nav-contact span {
     margin-left: 4px;

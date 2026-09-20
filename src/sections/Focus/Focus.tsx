@@ -1,14 +1,12 @@
 import "./Focus.css";
-import ResumeLink from "../../components/ResumeLink/ResumeLink";
 
 export default function Focus() {
   return (
     <section
-      data-reveal
       className="section focus-section wrap"
       aria-labelledby="focus-title"
     >
-      <div>
+      <div data-reveal="group">
         <p className="eyebrow">
           <span className="accent">03 /</span> Профессиональный фокус
         </p>
@@ -16,7 +14,7 @@ export default function Focus() {
           Качество —<br /> командная <em>работа.</em>
         </h2>
       </div>
-      <div className="focus-copy">
+      <div className="focus-copy" data-reveal="group">
         <p>
           Мне интересно влиять на качество продукта, архитектуру автотестов и
           процессы команды.
@@ -26,7 +24,6 @@ export default function Focus() {
           время его отсутствия. Развиваю навыки в Playwright + TypeScript и
           backend-автоматизации.
         </p>
-        <ResumeLink>Весь опыт и стек — в резюме</ResumeLink>
       </div>
     </section>
   );
