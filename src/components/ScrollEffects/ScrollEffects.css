@@ -1,119 +1,88 @@
-/* Content stays visible if JavaScript or IntersectionObserver is unavailable. */
+/* Only off-screen elements are prepared by JS; the fallback remains visible. */
 [data-reveal] {
   --reveal-delay: 0ms;
-  --reveal-distance: 32px;
+  --reveal-distance: 20px;
+}
+
+[data-reveal]:not([data-reveal="group"]),
+[data-reveal="group"] > * {
+  transition:
+    opacity 1400ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    background 300ms,
+    border-color 300ms;
+}
+
+[data-reveal-state="pending"]:not([data-reveal="group"]),
+[data-reveal="group"][data-reveal-state="pending"] > * {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition: none;
 }
 
 [data-reveal-state="revealed"]:not([data-reveal="group"]),
 [data-reveal="group"][data-reveal-state="revealed"] > * {
-  animation: section-arrive 850ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  animation-delay: var(--reveal-delay);
+  transition-delay: var(--reveal-delay), var(--reveal-delay), 0ms, 0ms;
 }
 
-[data-reveal="group"][data-reveal-state="revealed"] > :nth-child(2) {
-  animation-delay: 100ms;
+[data-reveal="group"] > :nth-child(2) {
+  --reveal-delay: 120ms;
+}
+[data-reveal="group"] > :nth-child(3) {
+  --reveal-delay: 240ms;
+}
+[data-reveal="group"] > :nth-child(4) {
+  --reveal-delay: 360ms;
+}
+[data-reveal="group"] > :nth-child(5) {
+  --reveal-delay: 480ms;
 }
 
-[data-reveal="group"][data-reveal-state="revealed"] > :nth-child(3) {
-  animation-delay: 180ms;
+/* Keep card frames and hit targets still, including during keyboard focus. */
+.case[data-reveal-state="pending"] {
+  transform: none;
 }
 
-[data-reveal="group"][data-reveal-state="revealed"] > :nth-child(4) {
-  animation-delay: 240ms;
-}
-
-[data-reveal="group"][data-reveal-state="revealed"] > :nth-child(5) {
-  animation-delay: 300ms;
-}
-
-.section-heading[data-reveal] {
-  --reveal-distance: 42px;
-}
-
-.case[data-reveal-state="revealed"] {
-  animation-name: card-arrive;
-}
-
-@media (min-width: 701px) {
+@media (min-width: 1001px) {
   .case:nth-child(2) {
-    --reveal-delay: 110ms;
+    --reveal-delay: 160ms;
   }
-
   .case:nth-child(3) {
-    --reveal-delay: 220ms;
+    --reveal-delay: 320ms;
   }
 }
 
-/* Keyboard and anchor navigation keep the requested content immediately stable. */
-[data-reveal-state="revealed"]:focus-within,
-[data-reveal-state="revealed"]:target,
-[data-reveal="group"][data-reveal-state="revealed"]:focus-within > *,
-:target [data-reveal-state="revealed"],
-:target [data-reveal="group"][data-reveal-state="revealed"] > * {
-  animation: none;
-}
-
-@keyframes section-arrive {
-  from {
-    opacity: 0.15;
-    transform: translateY(var(--reveal-distance));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes card-arrive {
-  from {
-    opacity: 0.15;
-    transform: translateY(48px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+/* Explicit navigation must never leave its destination hidden. */
+[data-reveal]:focus-within,
+[data-reveal]:target,
+[data-reveal="group"]:focus-within > *,
+:target [data-reveal],
+:target [data-reveal="group"] > * {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 .scroll-progress {
-  display: none;
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  height: 2px;
+  pointer-events: none;
+  background: var(--accent, #ff7849);
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
-/* Native scroll animation needs neither scroll listeners nor an animation loop. */
-@supports (animation-timeline: scroll()) {
-  .scroll-progress {
-    display: block;
-    position: fixed;
-    inset: 0 0 auto;
-    z-index: 100;
-    height: 2px;
-    pointer-events: none;
-    background: var(--accent, #ff7849);
-    transform: scaleX(0);
-    transform-origin: left;
-    animation: reading-progress linear both;
-    animation-timeline: scroll(root block);
-  }
-}
-
-@keyframes reading-progress {
-  to {
-    transform: scaleX(1);
-  }
-}
-
-/* The browser ties these effects directly to scroll, in both directions. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .experience-timeline {
       view-timeline-name: --experience-scroll;
       view-timeline-axis: block;
     }
-
     .experience-timeline::before {
       background: var(--line);
     }
-
     .experience-timeline::after {
       content: "";
       position: absolute;
@@ -123,10 +92,9 @@
       transform-origin: top;
       animation: timeline-draw linear both;
       animation-timeline: --experience-scroll;
-      animation-range: cover 15% cover 85%;
+      animation-range: cover 10% cover 95%;
       pointer-events: none;
     }
-
     .experience-timeline__marker {
       z-index: 1;
     }
@@ -137,7 +105,6 @@
       view-timeline-name: --hero-scroll;
       view-timeline-axis: block;
     }
-
     .portrait {
       animation: portrait-drift linear both;
       animation-timeline: --hero-scroll;
@@ -157,32 +124,27 @@
 
 @keyframes portrait-drift {
   from {
-    transform: translateY(0) rotate(-2deg) scale(1);
+    transform: translateY(0) rotate(-2deg);
   }
   to {
-    transform: translateY(65px) rotate(1deg) scale(0.96);
+    transform: translateY(28px) rotate(-1deg);
   }
 }
 
 @media (max-width: 700px) {
-  [data-reveal],
-  .section-heading[data-reveal] {
-    --reveal-distance: 22px;
-  }
-
-  .case[data-reveal-state="revealed"] {
-    animation-name: section-arrive;
+  [data-reveal] {
+    --reveal-distance: 12px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal-state="revealed"],
-  [data-reveal="group"][data-reveal-state="revealed"] > * {
-    animation: none;
+  [data-reveal],
+  [data-reveal="group"] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
-
   .scroll-progress {
     display: none;
-    animation: none;
   }
 }
